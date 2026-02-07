@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LicGen - License Generator</title>
+    <!-- Tailwind CSS (CDN for static portability) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'hsl(var(--background))',
+                        foreground: 'hsl(var(--foreground))',
+                        card: 'hsl(var(--card))',
+                        'card-foreground': 'hsl(var(--card-foreground))',
+                        popover: 'hsl(var(--popover))',
+                        'popover-foreground': 'hsl(var(--popover-foreground))',
+                        primary: 'hsl(var(--primary))',
+                        'primary-foreground': 'hsl(var(--primary-foreground))',
+                        secondary: 'hsl(var(--secondary))',
+                        'secondary-foreground': 'hsl(var(--secondary-foreground))',
+                        muted: 'hsl(var(--muted))',
+                        'muted-foreground': 'hsl(var(--muted-foreground))',
+                        accent: 'hsl(var(--accent))',
+                        'accent-foreground': 'hsl(var(--accent-foreground))',
+                        destructive: 'hsl(var(--destructive))',
+                        'destructive-foreground': 'hsl(var(--destructive-foreground))',
+                        border: 'hsl(var(--border))',
+                        input: 'hsl(var(--input))',
+                        ring: 'hsl(var(--ring))',
+                    },
+                    borderRadius: {
+                        lg: 'var(--radius)',
+                        md: 'calc(var(--radius) - 2px)',
+                        sm: 'calc(var(--radius) - 4px)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Styles (CSS Variables) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body
+    class="min-h-screen bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground">
+
+    <div class="container mx-auto max-w-5xl p-6 lg:p-12">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">LicGen Web UI</h1>
+                <p class="text-muted-foreground mt-1">Generate open source licenses instantly using extracted templates.
+                </p>
+            </div>
+            <button id="theme-toggle"
+                class="p-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors border border-border">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-moon">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+            </button>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Controls Sidebar -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- License Select -->
+                <div class="space-y-2">
+                    <label for="license-select"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">License
+                        Type</label>
+                    <select id="license-select"
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <!-- Inputs -->
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="name-input" class="text-sm font-medium leading-none">Author Name</label>
+                        <input id="name-input" type="text" placeholder="John Doe"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="year-input" class="text-sm font-medium leading-none">Year</label>
+                        <input id="year-input" type="number" placeholder="2026"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                    <div class="p-6 space-y-2">
+                        <h3 class="text-lg font-semibold leading-none tracking-tight">CLI Usage</h3>
+                        <p class="text-sm text-muted-foreground">You can also run this locally with the binary.</p>
+                        <div class="relative rounded-md bg-muted px-4 py-3 font-mono text-xs">
+                            <span id="cmd-preview" class="break-all whitespace-pre-wrap">licgen mit</span>
+                            <button id="copy-cmd-btn"
+                                class="absolute right-2 top-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background p-1 shadow-sm border border-border text-xs">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="lg:col-span-8 flex flex-col h-full rounded-xl border bg-card text-card-foreground shadow">
+
+                <!-- Tabs Header -->
+                <div class="flex items-center p-1 border-b">
+                    <div class="grid w-full max-w-[400px] grid-cols-2 bg-muted p-1 rounded-lg">
+                        <button id="tab-text" data-state="active"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                            License Text
+                        </button>
+                        <button id="tab-cmd" data-state="inactive"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                            License Details
+                        </button>
+                    </div>
+                    <div class="ml-auto px-4">
+                        <button id="copy-btn"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2">
+                            Copy Text
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="flex-1 p-6 min-h-[500px] bg-card rounded-b-xl relative">
+                    <!-- Text Content -->
+                    <div id="content-text" class="h-full">
+                        <pre id="preview-text"
+                            class="h-full w-full p-4 rounded-md bg-muted/30 border border-border font-mono text-sm whitespace-pre-wrap overflow-auto">
+                        </pre>
+                    </div>
+
+                    <!-- Details Content (Hidden by default) -->
+                    <div id="content-cmd" class="hidden h-full">
+                        <div class="prose prose-zinc dark:prose-invert max-w-none">
+                            <p id="details-desc" class="text-muted-foreground text-lg mb-6 leading-relaxed"></p>
+
+                            <div id="details-content" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
