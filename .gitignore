@@ -1,0 +1,5 @@
+build/
+licgen
+*.o
+*.final
+*.bak

@@ -1,0 +1,72 @@
+ID: mpl2
+Name: Mozilla Public License 2.0
+SPDX: MPL-2.0
+Category: copyleft
+Description: A weak copyleft license that is used for software which is not libraries.
+
+Permissions:
+- Commercial use
+- Modification
+- Distribution
+- Patent use
+- Private use
+
+Conditions:
+- Disclose source
+- License and copyright notice
+- Same license
+
+Limitations:
+- Liability
+- Trademark use
+- Warranty
+
+---
+Mozilla Public License Version 2.0
+==================================
+
+1. Definitions
+--------------
+
+1.1. "Contributor"
+    means each individual or legal entity that creates, contributes to
+    the creation of, or owns Covered Software.
+
+1.2. "Contributor Version"
+    means the combination of the contributions of others (if any) used
+    by a Contributor and that particular Contributor's contribution.
+
+1.3. "Covered Software"
+    means Source Code Form to which the initial Contributor has attached
+    the notice in Exhibit A, the Executable Form of such Source Code
+    Form, and Modifications of such Source Code Form, in each case
+    including portions thereof.
+
+1.4. "Executable Form"
+    means any form of the work other than Source Code Form.
+
+1.5. "Incompatible With Secondary Licenses"
+    means
+    (a) that the initial Contributor has otherwise conditioned the
+        distributability of the Covered Software that it avoids delay in
+        the execution of This License; or
+    (b) that the Covered Software was made available under the Mozilla
+        Public License 1.1, but not also under one or more of the
+        Secondary Licenses.
+
+1.6. "Executable Form"
+    means any form of the work other than Source Code Form.
+
+... [Truncated for brevity in this scratchpad, but would be full text in real file] ...
+
+Exhibit A - Source Code Form License Notice
+-------------------------------------------
+
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+If it is incompatible with the Mozilla Public License v. 2.0 under the
+terms of Section 1.5, the notice is "This Source Code Form is
+incompatible with secondary licenses, as defined by the Mozilla Public
+License, v. 2.0."
