@@ -101,16 +101,28 @@
 
                 <!-- Inputs -->
                 <div class="space-y-4">
-                    <div class="space-y-2">
+                    <div id="name-field-container" class="space-y-2">
                         <label for="name-input" class="text-sm font-medium leading-none">Author Name</label>
-                        <input id="name-input" type="text" placeholder="John Doe"
+                        <input id="name-input" type="text" placeholder="Teja Pudi"
                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                     </div>
 
-                    <div class="space-y-2">
+                    <div id="year-field-container" class="space-y-2">
                         <label for="year-input" class="text-sm font-medium leading-none">Year</label>
-                        <input id="year-input" type="number" placeholder="2026"
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <div class="relative flex items-center">
+                            <input id="year-input" type="text" inputmode="numeric" placeholder="2026"
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 pr-20 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                            <div class="absolute right-1 flex gap-1">
+                                <button id="year-decrement" type="button"
+                                    class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors inline-flex items-center justify-center text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    −
+                                </button>
+                                <button id="year-increment" type="button"
+                                    class="h-8 w-8 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors inline-flex items-center justify-center text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                    +
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

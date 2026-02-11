@@ -8,6 +8,10 @@ const dom = {
     licenseSelect: document.getElementById('license-select'),
     nameInput: document.getElementById('name-input'),
     yearInput: document.getElementById('year-input'),
+    yearIncrement: document.getElementById('year-increment'),
+    yearDecrement: document.getElementById('year-decrement'),
+    nameFieldContainer: document.getElementById('name-field-container'),
+    yearFieldContainer: document.getElementById('year-field-container'),
     previewText: document.getElementById('preview-text'),
     cmdPreview: document.getElementById('cmd-preview'),
     copyBtn: document.getElementById('copy-btn'),
@@ -174,6 +178,33 @@ function update() {
 
     // Update Details Tab
     renderDetails(licenses[licId]);
+
+    // Update Field Visibility
+    updateFieldVisibility(licenses[licId]);
+}
+
+function updateFieldVisibility(lic) {
+    if (!lic || !lic.text) return;
+
+    const hasNamePlaceholder = lic.text.includes('{{name}}');
+    const hasYearPlaceholder = lic.text.includes('{{year}}');
+
+    // Show/hide fields based on placeholder presence
+    if (dom.nameFieldContainer) {
+        if (hasNamePlaceholder) {
+            dom.nameFieldContainer.classList.remove('hidden');
+        } else {
+            dom.nameFieldContainer.classList.add('hidden');
+        }
+    }
+
+    if (dom.yearFieldContainer) {
+        if (hasYearPlaceholder) {
+            dom.yearFieldContainer.classList.remove('hidden');
+        } else {
+            dom.yearFieldContainer.classList.add('hidden');
+        }
+    }
 }
 
 function renderDetails(lic) {
@@ -204,6 +235,46 @@ function renderDetails(lic) {
 dom.licenseSelect.addEventListener('change', update);
 dom.nameInput.addEventListener('input', update);
 dom.yearInput.addEventListener('input', update);
+
+// Custom Year Controls
+if (dom.yearIncrement) {
+    dom.yearIncrement.addEventListener('click', () => {
+        const currentYear = parseInt(dom.yearInput.value) || new Date().getFullYear();
+        dom.yearInput.value = currentYear + 1;
+        update();
+    });
+}
+
+if (dom.yearDecrement) {
+    dom.yearDecrement.addEventListener('click', () => {
+        const currentYear = parseInt(dom.yearInput.value) || new Date().getFullYear();
+        dom.yearInput.value = currentYear - 1;
+        update();
+    });
+}
+
+// Year input validation - only allow numeric input
+if (dom.yearInput) {
+    dom.yearInput.addEventListener('input', (e) => {
+        // Remove non-numeric characters
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    });
+
+    // Handle keyboard arrow up/down
+    dom.yearInput.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const currentYear = parseInt(dom.yearInput.value) || new Date().getFullYear();
+            dom.yearInput.value = currentYear + 1;
+            update();
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const currentYear = parseInt(dom.yearInput.value) || new Date().getFullYear();
+            dom.yearInput.value = currentYear - 1;
+            update();
+        }
+    });
+}
 
 // Tabs
 dom.tabText.addEventListener('click', () => {
